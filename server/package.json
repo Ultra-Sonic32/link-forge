@@ -2,10 +2,16 @@
   "name": "link-forge-server",
   "version": "1.0.0",
   "description": "LinkForge is a scalable and modern URL shortener built with Node.js and MongoDB, designed for performance and future extensibility. It’s optimized with Redis caching and containerized for cloud deployment.",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js"
   },
   "author": "Simon Westhof",
-  "license": "MIT"
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "mongoose": "^8.17.2"
+  }
 }
