@@ -17,6 +17,7 @@ const creatShortUrl = async (originalUrl, customKey = null, neverExpire = false)
   }
 
   const savedUrl = await findByOriginalUrl(originalUrl);
+  console.log(`Found existing URL: ${savedUrl ? savedUrl.shortUrl : 'none'}`);
   if (savedUrl) {
     return savedUrl.shortUrl;
   }
@@ -46,4 +47,20 @@ const creatShortUrl = async (originalUrl, customKey = null, neverExpire = false)
   });
 };
 
-export { creatShortUrl };
+const resolveShortUrl = async shortUrl => {
+  const urlDoc = await findByShortUrl(shortUrl);
+
+  if (!urlDoc) {
+    throw new Error('Short URL not found');
+  }
+
+  if (!urlDoc.isActive) throw new Error('Short URL is deactivated');
+  if (!urlDoc.neverExpire && urlDoc.expiresAt && urlDoc.expiresAt < new Date()) {
+    throw new Error('Short URL has expired');
+  }
+  await incrementClicks(shortUrl);
+  console.log(`Accessed URL: ${urlDoc.originalUrl}`);
+  return urlDoc.originalUrl;
+};
+
+export { creatShortUrl, resolveShortUrl };

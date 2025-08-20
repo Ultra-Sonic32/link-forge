@@ -30,11 +30,11 @@ const findBySnowID = async snowflakeId => {
 
 /**
  * Find specific record by orginal Url
- * @param {string} orginalUrl
+ * @param {string} originalUrl
  * @returns
  */
-const findByOriginalUrl = async orginalUrl => {
-  return Url.findOne({ orginalUrl });
+const findByOriginalUrl = async originalUrl => {
+  return Url.findOne({ originalUrl });
 };
 
 /**
