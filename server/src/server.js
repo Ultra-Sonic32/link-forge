@@ -1,5 +1,4 @@
 import { connectToLinkForgeDB } from './config/dbSetup.js';
-import { generateSnowflakeId, generateShortUrlKey } from './utilities/keyGenerator.js';
 import { creatShortUrl, resolveShortUrl } from './services/url.service.js';
 
 await connectToLinkForgeDB();
