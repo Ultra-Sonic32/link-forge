@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 
 const urlSchema = new Schema(
   {
-    orginalUrl: { type: String, required: true },
+    originalUrl: { type: String, required: true },
     shortUrl: { type: String, required: true, unique: true },
     snowflakeId: { type: String, required: true, unique: true }, // Later use for distributed ID generation maybe?
     createdAt: { type: Date, default: Date.now },

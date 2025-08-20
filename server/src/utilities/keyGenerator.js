@@ -13,4 +13,4 @@ const generateShortUrlKey = () => {
   return createId();
 };
 
-export default { generateSnowflakeId, generateShortUrlKey };
+export { generateSnowflakeId, generateShortUrlKey };

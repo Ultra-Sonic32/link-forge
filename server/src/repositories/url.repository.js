@@ -1,4 +1,4 @@
-import Url from '../models/url';
+import Url from '../models/url.js';
 
 /**
  * Save Url Data to the database
@@ -26,6 +26,15 @@ const findByShortUrl = async shortUrl => {
  */
 const findBySnowID = async snowflakeId => {
   return Url.findOne({ snowflakeId });
+};
+
+/**
+ * Find specific record by orginal Url
+ * @param {string} orginalUrl
+ * @returns
+ */
+const findByOriginalUrl = async orginalUrl => {
+  return Url.findOne({ orginalUrl });
 };
 
 /**
@@ -57,4 +66,4 @@ const incrementClicks = async shortUrl => {
 //TODO Add Logic in here to return all record with maybe extrat parms to filter like is active or by some date
 const findAllShortUrl = async () => {};
 
-export { saveUrl, findByShortUrl, findBySnowID, isShortKeyTaken, findAllShortUrl, incrementClicks };
+export { saveUrl, findByShortUrl, findBySnowID, isShortKeyTaken, findByOriginalUrl, incrementClicks };
