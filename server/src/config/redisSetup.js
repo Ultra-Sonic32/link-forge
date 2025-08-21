@@ -40,7 +40,7 @@ const connectToRedis = async () => {
 const set = async (key, value, expirationMode, seconds) => {
   try {
     await getRedisClient().set(key, value, expirationMode, seconds);
-    console.info(`Key ${key} created in redis `);
+    //console.info(`Key ${key} created in redis `);
   } catch (error) {
     console.error(`Failed to create key in redis: ${error}`);
   }
@@ -50,7 +50,7 @@ const set = async (key, value, expirationMode, seconds) => {
 const get = async key => {
   try {
     const value = await getRedisClient().get(key);
-    console.info(`Value with key ${key} fetched from redis`);
+    //console.info(`Value with key ${key} fetched from redis`);
     return value;
   } catch (error) {
     console.error(`Failed to retrive key ${key} in redis: ${error}`);
@@ -65,7 +65,7 @@ const extendTTL = async (key, additionalTimeInSeconds) => {
     if (currentTTL > 0) {
       const newTTL = currentTTL + additionalTimeInSeconds;
       await getRedisClient().expire(key, newTTL);
-      console.info(`TTL for key ${key} extended to ${newTTL} in redis`);
+      //console.info(`TTL for key ${key} extended to ${newTTL} in redis`);
     } else {
       console.error(`Failed to extend TTL of key ${key} in redis`);
     }

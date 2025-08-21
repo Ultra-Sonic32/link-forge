@@ -8,6 +8,7 @@ import {
 } from '../repositories/url.repository.js';
 import validator from 'validator';
 import { generateShortUrlKey, generateSnowflakeId } from '../utilities/keyGenerator.js';
+import { get, set, redisExpirationMode } from '../config/redisSetup.js';
 
 const creatShortUrl = async (originalUrl, customKey = null, neverExpire = false) => {
   const EXPIRY_DAYS = 30;
@@ -38,28 +39,32 @@ const creatShortUrl = async (originalUrl, customKey = null, neverExpire = false)
 
   const expiresAt = !neverExpire ? new Date(Date.now() + EXPIRY_DAYS * 24 * 60 * 60 * 1000) : null;
 
-  return await saveUrl({
-    originalUrl: originalUrl,
-    shortUrl,
-    snowflakeId,
-    expiresAt,
-    neverExpire
-  });
+  const savedResult = await saveUrl({ originalUrl: originalUrl, shortUrl, snowflakeId, expiresAt, neverExpire });
+  await set(shortUrl, originalUrl, redisExpirationMode.EX, 60 * 60);
+
+  return savedResult;
 };
 
 const resolveShortUrl = async shortUrl => {
-  const urlDoc = await findByShortUrl(shortUrl);
+  const cachedKey = await get(shortUrl);
+  if (cachedKey) {
+    //console.log('Cache triggered');
+    return cachedKey;
+  }
 
+  const urlDoc = await findByShortUrl(shortUrl);
   if (!urlDoc) {
     throw new Error('Short URL not found');
   }
 
   if (!urlDoc.isActive) throw new Error('Short URL is deactivated');
+
   if (!urlDoc.neverExpire && urlDoc.expiresAt && urlDoc.expiresAt < new Date()) {
     throw new Error('Short URL has expired');
   }
   await incrementClicks(shortUrl);
-  console.log(`Accessed URL: ${urlDoc.originalUrl}`);
+  await set(shortUrl, urlDoc.originalUrl, redisExpirationMode.EX, 120);
+  //console.log(`Accessed URL: ${urlDoc.originalUrl}`);
   return urlDoc.originalUrl;
 };
 

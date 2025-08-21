@@ -2,6 +2,7 @@
 import express from 'express';
 import cors from 'cors';
 import { connectToLinkForgeDB } from './config/dbSetup.js';
+import { connectToRedis } from './config/redisSetup.js';
 import { router as urls } from './routes/url.routes.js';
 import debugLib from 'debug';
 const debug = debugLib('link-forge-server');
@@ -11,6 +12,7 @@ var app = express();
 const initializeDBAndStartServer = async () => {
   try {
     await connectToLinkForgeDB();
+    await connectToRedis();
     app.use(express.json());
 
     app.use(
