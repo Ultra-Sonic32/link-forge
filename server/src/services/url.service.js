@@ -8,7 +8,7 @@ import {
 } from '../repositories/url.repository.js';
 import validator from 'validator';
 import { generateShortUrlKey, generateSnowflakeId } from '../utilities/keyGenerator.js';
-import { get, set, redisExpirationMode } from '../config/redisSetup.js';
+import { get, set, redisExpirationMode, extendTTL } from '../config/redisSetup.js';
 
 const creatShortUrl = async (originalUrl, customKey = null, neverExpire = false) => {
   const EXPIRY_DAYS = 30;
@@ -49,6 +49,8 @@ const resolveShortUrl = async shortUrl => {
   const cachedKey = await get(shortUrl);
   if (cachedKey) {
     //console.log('Cache triggered');
+    // Extend TTL
+    await extendTTL(shortenUrlKey, 60);
     return cachedKey;
   }
 
