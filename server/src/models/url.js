@@ -17,6 +17,7 @@ const urlSchema = new Schema(
 
 // Compound index to optimize active, not expired
 urlSchema.index({ isActive: 1, expiresAt: 1 });
+urlSchema.index({ createdAt: -1 });
 
 const Url = model('Url', urlSchema);
 export default Url;

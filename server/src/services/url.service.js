@@ -4,7 +4,8 @@ import {
   findBySnowID,
   isShortKeyTaken,
   findByOriginalUrl,
-  incrementClicks
+  incrementClicks,
+  findAllShortUrl
 } from '../repositories/url.repository.js';
 import validator from 'validator';
 import { generateShortUrlKey, generateSnowflakeId } from '../utilities/keyGenerator.js';
@@ -70,4 +71,8 @@ const resolveShortUrl = async shortUrl => {
   return urlDoc.originalUrl;
 };
 
-export { creatShortUrl, resolveShortUrl };
+const getAllUrls = async filters => {
+  return await findAllShortUrl(filters);
+};
+
+export { creatShortUrl, resolveShortUrl, getAllUrls };

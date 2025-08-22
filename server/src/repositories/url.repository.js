@@ -1,5 +1,7 @@
 import Url from '../models/url.js';
 
+const PUBLIC_FIELDS = 'shortUrl originalUrl isActive createdAt expiresAt neverExpire lastAccessed clicks';
+
 /**
  * Save Url Data to the database
  * @param {*} data
@@ -63,7 +65,27 @@ const incrementClicks = async shortUrl => {
   );
 };
 
-//TODO Add Logic in here to return all record with maybe extrat parms to filter like is active or by some date
-const findAllShortUrl = async () => {};
+/**
+ * Find All url in database and optional provide queryparm filters
+ * @param {*} filter
+ */
+const findAllShortUrl = async (filters = {}) => {
+  const query = {};
 
-export { saveUrl, findByShortUrl, findBySnowID, isShortKeyTaken, findByOriginalUrl, incrementClicks };
+  if (filters.isActive !== undefined) query.isActive = filters.isActive;
+  if (filters.neverExpire !== undefined) query.neverExpire = filters.neverExpire;
+
+  if (filters.createdFrom || filters.createdTo) {
+    query.createdAt = {};
+    if (filters.createdFrom) query.createdAt.$gte = new Date(filters.createdFrom); // greater than or equals
+    if (filters.createdTo) query.createdAt.$lte = new Date(filters.createdTo); // less tahn or equals
+  }
+
+  // Exact match used for performance. Regex impacts latency, and `contains` is only needed for partial matching.
+  if (filters.originalUrl) query.originalUrl = filters.originalUrl;
+  if (filters.shortUrl) query.shortUrl = filters.shortUrl;
+
+  return Url.find(query, PUBLIC_FIELDS);
+};
+
+export { saveUrl, findByShortUrl, findBySnowID, isShortKeyTaken, findByOriginalUrl, incrementClicks, findAllShortUrl };

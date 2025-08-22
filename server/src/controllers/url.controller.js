@@ -1,4 +1,4 @@
-import { creatShortUrl, resolveShortUrl } from '../services/url.service.js';
+import { creatShortUrl, resolveShortUrl, getAllUrls } from '../services/url.service.js';
 
 const saveShortUrlKey = async (req, res) => {
   const { originalUrl, customKey, neverExpire } = req.body;
@@ -22,4 +22,15 @@ const redirectShortUrl = async (req, res) => {
   }
 };
 
-export { saveShortUrlKey, redirectShortUrl };
+const getAllShortUrls = async (req, res) => {
+  const filters = req.query;
+  try {
+    const response = await getAllUrls(filters);
+    res.status(200).json(response);
+  } catch (error) {
+    console.error('Error fetching urls:', error);
+    res.status(500).json({ message: error.message || 'Error getting urls' });
+  }
+};
+
+export { saveShortUrlKey, redirectShortUrl, getAllShortUrls };
