@@ -20,3 +20,12 @@ export interface createUrl {
 export interface resolveShortUrl {
   originalUrl: string;
 }
+
+export interface urlFilters {
+  isActive?: boolean;
+  neverExpire?: boolean;
+  createdFrom?: string; // ISO string like 2025-08-20T08:56:05.980Z
+  createdTo?: string;
+  originalUrl?: string;
+  shortUrl?: string;
+}
