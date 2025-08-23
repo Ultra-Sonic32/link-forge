@@ -51,7 +51,7 @@ const resolveShortUrl = async shortUrl => {
   if (cachedKey) {
     //console.log('Cache triggered');
     // Extend TTL
-    await extendTTL(shortenUrlKey, 60);
+    await extendTTL(shortUrl, 60);
     return cachedKey;
   }
 
