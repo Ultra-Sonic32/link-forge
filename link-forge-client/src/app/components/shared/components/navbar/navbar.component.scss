@@ -12,7 +12,7 @@
 
   ul {
     display: flex;
-    gap: 2rem;
+    gap: 5rem;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -23,9 +23,12 @@
       text-decoration: none;
       transition: color 0.3s ease-in-out;
 
-      &.active,
+      &.active {
+        color: #66FA0F;
+      };
+      
       &:hover {
-        color: #00ffff;
+        color: #00A1FE;
       }
     }
   }

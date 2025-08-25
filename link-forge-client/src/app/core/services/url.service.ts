@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class Url {
+export class UrlService {
   private readonly baseUrl = `${environment.apiUrl}/urls`;
 
   constructor(private http: HttpClient) {}

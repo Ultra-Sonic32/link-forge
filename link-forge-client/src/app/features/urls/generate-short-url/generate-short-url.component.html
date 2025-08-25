@@ -1,1 +1,41 @@
-<p>generate-short-url works!</p>
+<div class="container">
+  <div class="generate-box">
+    <h2>Shorten Your URL</h2>
+
+    <form [formGroup]="createUrlForm" (ngSubmit)="onGenerate()">
+      <input
+        type="text"
+        placeholder="Original URL"
+        formControlName="originalUrl"
+        [class.invalid]="isInvalid('originalUrl')"
+      />
+      <div class="error" *ngIf="isInvalid('originalUrl')">
+        <strong *ngIf="createUrlForm.get('originalUrl')?.errors?.['required']"
+          >URL is required.</strong
+        >
+        <strong *ngIf="createUrlForm.get('originalUrl')?.errors?.['pattern']"
+          >Must be valid url.</strong
+        >
+      </div>
+
+      <input type="text" placeholder="Custom Key (optional)" formControlName="customKey" />
+
+      <label class="checkbox">
+        <input type="checkbox" formControlName="neverExpire" />
+        Never Expire
+      </label>
+
+      <button type="submit" [disabled]="createUrlForm.invalid">Generate</button>
+    </form>
+
+    <!-- Result Box -->
+    <div *ngIf="shortenedUrl" class="result">
+      <p><strong>Short URL:</strong> {{ shortenedUrl }}</p>
+      <div class="actions">
+        <button (click)="copyToClipboard()"><i class="fas fa-copy"></i> Copy</button>
+        <button (click)="openInNewTab()"><i class="fas fa-external-link-alt"></i> Open</button>
+        <button (click)="downloadQRCode()"><i class="fas fa-qrcode"></i> QR Code</button>
+      </div>
+    </div>
+  </div>
+</div>
