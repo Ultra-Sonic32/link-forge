@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms'
 import { createUrl } from '../../../core/interfaces/url-details.model';
 import { UrlService } from '../../../core/services/url.service';
 import { SharedModule } from '../../../core/shared/shared.module';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-generate-short-url',
@@ -19,6 +20,8 @@ export default class GenerateShortUrlComponent {
     customKey: '',
     neverExpire: false,
   };
+  copyButton: string = 'copy';
+  copied: boolean = false;
 
   shortenedUrl: string | null = null;
 
@@ -40,7 +43,7 @@ export default class GenerateShortUrlComponent {
 
     this.urlService.generateShortUrl(urlData).subscribe({
       next: (response) => {
-        this.shortenedUrl = response.shortUrl;
+        this.shortenedUrl = `${environment.apiUrl}/urls/resolve/${response.shortUrl}`;
         this.createUrlForm.reset();
       },
       error: (err) => {
@@ -49,7 +52,18 @@ export default class GenerateShortUrlComponent {
     });
   }
 
-  copyToClipboard() {}
+  copyToClipboard() {
+    if (this.shortenedUrl) {
+      navigator.clipboard.writeText(this.shortenedUrl).then(() => {
+        this.copied = true;
+        this.copyButton = 'Copied';
+        setTimeout(() => {
+          this.copied = false;
+          this.copyButton = 'Copy';
+        }, 2000);
+      });
+    }
+  }
 
   openInNewTab() {}
 
