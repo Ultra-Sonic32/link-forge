@@ -15,6 +15,9 @@ const redirectShortUrl = async (req, res) => {
   const { shortUrl } = req.params;
   try {
     const response = await resolveShortUrl(shortUrl);
+    if (response) {
+      return res.redirect(response);
+    }
     res.status(200).json(response);
   } catch (error) {
     console.error('Error resolving short url', error);
