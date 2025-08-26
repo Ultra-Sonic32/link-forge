@@ -52,6 +52,7 @@ const resolveShortUrl = async shortUrl => {
     //console.log('Cache triggered');
     // Extend TTL
     await extendTTL(shortUrl, 60);
+    await incrementClicks(shortUrl);
     return cachedKey;
   }
 
