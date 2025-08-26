@@ -30,10 +30,13 @@
 
     <!-- Result Box -->
     <div *ngIf="shortenedUrl" class="result">
-      <p><strong>Short URL:</strong> {{ shortenedUrl }}</p>
+      <h3>Your Short URL</h3>
+      <a [href]="shortenedUrl" target="_blank" rel="noopener noreferrer" class="short-link">
+        {{ shortenedUrl }}
+      </a>
+
       <div class="actions">
         <button (click)="copyToClipboard()"><i class="fas fa-copy"></i> {{ copyButton }}</button>
-        <button (click)="openInNewTab()"><i class="fas fa-external-link-alt"></i> Open</button>
         <button (click)="downloadQRCode()"><i class="fas fa-qrcode"></i> QR Code</button>
       </div>
     </div>

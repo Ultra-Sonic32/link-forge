@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { createUrl } from '../../../core/interfaces/url-details.model';
 import { UrlService } from '../../../core/services/url.service';
 import { SharedModule } from '../../../core/shared/shared.module';
@@ -15,17 +14,16 @@ import { environment } from '../../../../environments/environment';
 })
 export default class GenerateShortUrlComponent {
   createUrlForm: FormGroup;
-  formData: createUrl = {
-    originalUrl: '',
-    customKey: '',
-    neverExpire: false,
-  };
   copyButton: string = 'copy';
   copied: boolean = false;
 
   shortenedUrl: string | null = null;
 
-  constructor(private urlService: UrlService, private fb: FormBuilder) {
+  constructor(
+    private urlService: UrlService,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {
     this.createUrlForm = this.fb.group({
       originalUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+$/i)]],
       customKey: [''],
@@ -57,15 +55,15 @@ export default class GenerateShortUrlComponent {
       navigator.clipboard.writeText(this.shortenedUrl).then(() => {
         this.copied = true;
         this.copyButton = 'Copied';
+        this.cdr.detectChanges();
         setTimeout(() => {
           this.copied = false;
           this.copyButton = 'Copy';
+          this.cdr.detectChanges();
         }, 2000);
       });
     }
   }
-
-  openInNewTab() {}
 
   downloadQRCode() {}
 
