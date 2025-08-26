@@ -36,9 +36,10 @@
       </a>
 
       <div class="actions">
-        <button (click)="copyToClipboard()"><i class="fas fa-copy"></i> {{ copyButton }}</button>
+        <button (click)="copyToClipboard()"><i class="fas fa-copy"></i> {{ copyButton() }}</button>
         <button (click)="downloadQRCode()"><i class="fas fa-qrcode"></i> QR Code</button>
       </div>
     </div>
+    <app-qr-model *ngIf="showQrModal()" [url]="shortenedUrl!" (close)="closeModal()" />
   </div>
 </div>

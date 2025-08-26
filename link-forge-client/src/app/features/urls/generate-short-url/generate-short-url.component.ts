@@ -1,23 +1,24 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { createUrl } from '../../../core/interfaces/url-details.model';
 import { UrlService } from '../../../core/services/url.service';
 import { SharedModule } from '../../../core/shared/shared.module';
 import { environment } from '../../../../environments/environment';
+import { QrModelComponent } from '../../../components/shared/components/qr-model/qr-model.component';
 
 @Component({
   selector: 'app-generate-short-url',
-  imports: [SharedModule],
+  imports: [SharedModule, QrModelComponent],
   templateUrl: './generate-short-url.component.html',
   styleUrl: './generate-short-url.component.scss',
   standalone: true,
 })
 export default class GenerateShortUrlComponent {
   createUrlForm: FormGroup;
-  copyButton: string = 'copy';
-  copied: boolean = false;
-
+  copyButton = signal('Copy');
+  copied = signal(false);
   shortenedUrl: string | null = null;
+  showQrModal = signal(false);
 
   constructor(
     private urlService: UrlService,
@@ -43,6 +44,9 @@ export default class GenerateShortUrlComponent {
       next: (response) => {
         this.shortenedUrl = `${environment.apiUrl}/urls/resolve/${response.shortUrl}`;
         this.createUrlForm.reset();
+        this.copyButton.set('Copy');
+        this.copied.set(false);
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Failed to shorten URL: ', err);
@@ -53,19 +57,26 @@ export default class GenerateShortUrlComponent {
   copyToClipboard() {
     if (this.shortenedUrl) {
       navigator.clipboard.writeText(this.shortenedUrl).then(() => {
-        this.copied = true;
-        this.copyButton = 'Copied';
+        this.copyButton.set('Copied');
+        this.copied.set(true);
         this.cdr.detectChanges();
+
         setTimeout(() => {
-          this.copied = false;
-          this.copyButton = 'Copy';
+          this.copyButton.set('Copy');
+          this.copied.set(false);
           this.cdr.detectChanges();
         }, 2000);
       });
     }
   }
 
-  downloadQRCode() {}
+  downloadQRCode(): void {
+    this.showQrModal.set(true);
+  }
+
+  closeModal(): void {
+    this.showQrModal.set(false);
+  }
 
   isInvalid(controlName: string): boolean {
     const control = this.createUrlForm.get(controlName);

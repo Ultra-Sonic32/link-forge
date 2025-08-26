@@ -1,0 +1,15 @@
+<div class="qr-modal">
+  <div class="qr-content">
+    <h3>Your QR Code</h3>
+    <qrcode [qrdata]="url" [width]="200" [errorCorrectionLevel]="'M'" #qrCanvas></qrcode>
+
+    <div class="buttons">
+      <button (click)="downloadQRCode(qrCanvas)">
+        <i class="fa-solid fa-download"></i>Download QR
+      </button>
+      <button class="close" (click)="emitClose()">
+        <i class="fa-solid fa-rectangle-xmark"></i> Close
+      </button>
+    </div>
+  </div>
+</div>

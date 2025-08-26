@@ -94,6 +94,11 @@
       margin-bottom: 1.5rem;
     }
 
+    .short-link:hover {
+      color: #ffffff;
+      text-decoration: none;
+    }
+
     .actions {
       display: flex;
       justify-content: center;
@@ -121,4 +126,6 @@
       }
     }
   }
+
+  
 }
