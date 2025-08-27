@@ -1,6 +1,12 @@
 <div class="container">
   <div class="view-box">
     <h2 class="text-center text-white mb-4">All Shortened URLs</h2>
+    <div class="d-flex justify-content-end mb-3">
+      <button class="btn btn-primary" style="margin-right: 10px; width: 177px" (click)="refresh()">
+        <i class="fa fa-refresh" aria-hidden="true"></i>
+        Refresh
+      </button>
+    </div>
 
     <!-- Loading -->
     <div class="d-flex justify-content-center mb-3" *ngIf="isLoadingData()">
@@ -14,7 +20,7 @@
       <!-- Search -->
       <input
         type="text"
-        class="form-control"
+        class="form-control text-white"
         placeholder="Search by any field..."
         [(ngModel)]="searchText"
         (ngModelChange)="onSearch()"
@@ -24,7 +30,7 @@
       <label for="itemsPerPageSelect" class="text-white">Items per page:</label>
       <select
         id="itemsPerPageSelect"
-        class="form-select mb-3"
+        class="form-select mb-3 text-white"
         [ngModel]="itemsPerPage()"
         (ngModelChange)="onItemsPerPageChange($event)"
       >
@@ -62,7 +68,7 @@
                 </a>
               </td>
 
-              <td>{{ url.createdAt | date : 'short' }}</td>
+              <td>{{ url.createdAt | date : "yyyy/mm/dd 'at' hh:mm" }}</td>
 
               <td>
                 <span *ngIf="url.neverExpire">Never</span>
@@ -79,11 +85,11 @@
 
               <td>
                 <button
-                  style="color: black; border-color: black"
-                  class="btn btn-sm btn-outline-light"
+                  style="color: black"
+                  class="btn btn-sm"
                   (click)="copyShortUrl(url.shortUrl)"
                 >
-                  <i class="fas fa-copy"></i> Copy
+                  <i class="fas fa-copy"></i>
                 </button>
               </td>
             </tr>

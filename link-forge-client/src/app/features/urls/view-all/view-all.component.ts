@@ -26,11 +26,8 @@ export default class ViewAllComponent implements OnInit {
 
   constructor(private urlService: UrlService, private cdr: ChangeDetectorRef) {}
 
-  ngOnInit(): void {
-    this.loadAllUrls();
-    effect(() => {
-      this.updatePagination();
-    });
+  async ngOnInit() {
+    await this.refresh();
   }
 
   private loadAllUrls(): void {
@@ -74,6 +71,13 @@ export default class ViewAllComponent implements OnInit {
     const expires = new Date(expiryDate);
     const diff = Math.ceil((expires.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
     return diff;
+  }
+
+  async refresh() {
+    this.loadAllUrls();
+    effect(() => {
+      this.updatePagination();
+    });
   }
 
   /*
