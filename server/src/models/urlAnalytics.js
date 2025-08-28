@@ -6,6 +6,7 @@ const urlAnalyticSchema = new Schema(
     shortUrl: { type: String, required: true },
     accessedAt: { type: Date, default: Date.now },
     ip: { type: String, required: true }, // Just give back ipv6 for local host ::1 will work if hsted or using reverseproxy
+    userAgent: { type: String, required: true },
     referrer: { type: String, default: null },
     country: { type: String, default: null }, // will only work with correct ip
     browser: { type: String, default: null },

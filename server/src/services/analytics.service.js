@@ -6,8 +6,8 @@ import {
   getClicksOverTime
 } from '../repositories/analytics.repository.js';
 
-const logAnalytics = async (shortUrl, ip, country, referrer, browser, os, device) => {
-  return await saveAnalyticsLog({ shortUrl, ip, country, referrer, browser, os, device });
+const logAnalytics = async ({ shortUrl, ip, referrer, userAgent, country, browser, os, device }) => {
+  return await saveAnalyticsLog({ shortUrl, ip, referrer, userAgent, country, browser, os, device });
 };
 
 const fetchDashboardStats = async () => {
