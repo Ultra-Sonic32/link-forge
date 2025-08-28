@@ -1,10 +1,4 @@
-import {
-  fetchDashboardStats,
-  fetchRecentAccessLogs,
-  logAnalytics,
-  fetchClicksOverTime,
-  fetchTopUrls
-} from '../services/analytics.service.js';
+import { fetchDashboardStats, fetchRecentAccessLogs, fetchClicksOverTime, fetchTopUrls } from '../services/analytics.service.js';
 
 const getDashboardCards = async (req, res) => {
   try {
@@ -26,17 +20,6 @@ const getRecentAnalyticsTable = async (req, res) => {
   }
 };
 
-// const postAnalyticsData = async (req, res) => {
-//   const { shortUrl, ip, referrer, userAgent, country } = req.body;
-//   try {
-//     await logAnalytics(shortUrl, ip, referrer, userAgent, country);
-//     res.status(204).end();
-//   } catch (err) {
-//     console.error('Access logging failed:', err);
-//     res.status(500).json({ message: 'Failed to log access' });
-//   }
-// };
-
 const getClicksChartData = async (req, res) => {
   try {
     const data = await fetchClicksOverTime();
@@ -55,4 +38,4 @@ const getTopClickedUrls = async (req, res) => {
   }
 };
 
-export { getDashboardCards, getRecentAnalyticsTable, postAnalyticsData, getClicksChartData, getTopClickedUrls };
+export { getDashboardCards, getRecentAnalyticsTable, getClicksChartData, getTopClickedUrls };

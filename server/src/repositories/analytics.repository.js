@@ -16,7 +16,7 @@ const saveAnalyticsLog = async log => {
  * @returns
  */
 const getDashboardStats = async () => {
-  const [totalUrls, totalClicks, mostCliecked, mostRecent] = await Promise.all([
+  const [totalUrls, totalClicks, mostClicked, mostRecent] = await Promise.all([
     Url.countDocuments(),
     Url.aggregate([{ $group: { _id: null, total: { $sum: '$clicks' } } }]),
     Url.findOne().sort({ clicks: -1 }).limit(1),

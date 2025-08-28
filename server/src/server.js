@@ -4,6 +4,7 @@ import cors from 'cors';
 import { connectToLinkForgeDB } from './config/dbSetup.js';
 import { connectToRedis } from './config/redisSetup.js';
 import { router as urls } from './routes/url.routes.js';
+import { router as analytics } from './routes/analytics.routes.js';
 import debugLib from 'debug';
 const debug = debugLib('link-forge-server');
 
@@ -24,6 +25,7 @@ const initializeDBAndStartServer = async () => {
     );
 
     app.use('/urls', urls);
+    app.use('/analytics', analytics);
 
     // 404 Handler
     app.use(function (req, res, next) {
