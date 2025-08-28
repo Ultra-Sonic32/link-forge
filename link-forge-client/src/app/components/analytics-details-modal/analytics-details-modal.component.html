@@ -1,0 +1,18 @@
+<div class="modal-backdrop" *ngIf="show && log">
+  <div class="modal-content">
+    <h4>Access Log Details</h4>
+    <hr />
+    <div class="info-grid">
+      <div><strong>Short URL:</strong> {{ log.shortUrl }}</div>
+      <div><strong>Accessed At:</strong> {{ log.accessedAt | date : 'yyyy/MM/dd @ HH:mm' }}</div>
+      <div><strong>Referrer:</strong> {{ log.referrer }}</div>
+      <div><strong>Browser:</strong> {{ log.browser }}</div>
+      <div><strong>OS:</strong> {{ log.os }}</div>
+      <div><strong>Device:</strong> {{ log.device }}</div>
+      <div class="full-span"><strong>User Agent:</strong> {{ log.userAgent }}</div>
+    </div>
+    <div class="text-center mt-3">
+      <button class="btn btn-light" (click)="close()">Close</button>
+    </div>
+  </div>
+</div>

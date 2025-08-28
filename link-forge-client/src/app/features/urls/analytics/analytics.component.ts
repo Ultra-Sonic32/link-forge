@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, computed, OnInit, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  computed,
+  OnInit,
+  signal,
+} from '@angular/core';
 import {
   analytics,
   analyticsDashboardStats,
@@ -9,22 +16,39 @@ import { getClickOverTimeLineChartConfig } from '../../../core/shared/chart-conf
 import { Chart } from 'chart.js';
 import { SharedModule } from '../../../core/shared/shared.module';
 import { urlDetails } from '../../../core/interfaces/url-details.model';
+import { PaginationComponent } from '../../../components/pagination/pagination.component';
+import { environment } from '../../../../environments/environment.development';
+import { AnalyticsDetailsModalComponent } from '../../../components/analytics-details-modal/analytics-details-modal.component';
 
 @Component({
   selector: 'app-analytics',
-  imports: [SharedModule],
+  imports: [SharedModule, PaginationComponent, AnalyticsDetailsModalComponent],
   templateUrl: './analytics.component.html',
   styleUrl: './analytics.component.scss',
 })
 export default class AnalyticsComponent implements OnInit {
   dashboardCardStats = signal<analyticsDashboardStats | null>(null);
+  selectedTab = signal<'urls' | 'analytics'>('urls');
   clickOverTime = signal<clicksOverTime[]>([]);
   topUrls = signal<urlDetails[]>([]);
   recentAccessLogs = signal<analytics[]>([]);
   isLoadingData = signal<boolean>(true);
   chartInstance: Chart | null = null;
+  selectedLog = signal<analytics | null>(null);
+  showDetailsModal = signal<boolean>(false);
 
-  constructor(private analyticService: AnalyticsService) {}
+  // Pagination properties
+  // Top URLs
+  topUrlsCurrentPage = signal(1);
+  topUrlsItemsPerPage = signal(10);
+  paginatedUrls = signal<urlDetails[]>([]);
+
+  // Analytics
+  analyticsCurrentPage = signal(1);
+  analyticsItemsPerPage = signal(10);
+  paginatedAnalytics = signal<analytics[]>([]);
+
+  constructor(private analyticService: AnalyticsService, private cdr: ChangeDetectorRef) {}
 
   async ngOnInit() {
     this.isLoadingData.set(true);
@@ -86,6 +110,8 @@ export default class AnalyticsComponent implements OnInit {
     this.analyticService.gettopShortUrl().subscribe({
       next: (data) => {
         this.topUrls.set(data);
+        this.updateTopUrlsPagination();
+        this.cdr.detectChanges();
       },
       error: (error) => console.error('Failed to top urls', error),
     });
@@ -98,8 +124,67 @@ export default class AnalyticsComponent implements OnInit {
     this.analyticService.getRecentAccessLogs().subscribe({
       next: (data) => {
         this.recentAccessLogs.set(data);
+        this.updateAnalyticsPagination();
+        this.cdr.detectChanges();
       },
       error: (error) => console.error('Failed to top urls', error),
     });
+  }
+
+  /**
+   * Helper Button for table
+   */
+  copyShortUrl(shortUrl: string): void {
+    const fullUrl = `${environment.apiUrl}/urls/resolve/${shortUrl}`;
+    navigator.clipboard.writeText(fullUrl).then(() => {
+      alert('Short URL copied to clipboard!');
+    });
+  }
+
+  detailedInfoModal(log: analytics): void {
+    this.selectedLog.set(log);
+    this.showDetailsModal.set(true);
+  }
+
+  closeModal(): void {
+    this.showDetailsModal.set(false);
+  }
+
+  /**
+   * Pagination Controls and methods
+   */
+  updateTopUrlsPagination(): void {
+    const startIndex = (this.topUrlsCurrentPage() - 1) * this.topUrlsItemsPerPage();
+    const endIndex = startIndex + this.topUrlsItemsPerPage();
+    const paginated = this.topUrls().slice(startIndex, endIndex);
+    this.paginatedUrls.set(paginated);
+  }
+
+  goToTopUrlsPage(page: number): void {
+    this.topUrlsCurrentPage.set(page);
+    this.updateTopUrlsPagination();
+  }
+
+  onTopUrlsItemsPerPageChange(itemsPerPage: number): void {
+    this.topUrlsItemsPerPage.set(Number(itemsPerPage));
+    this.topUrlsCurrentPage.set(1);
+    this.updateTopUrlsPagination();
+  }
+  updateAnalyticsPagination(): void {
+    const startIndex = (this.analyticsCurrentPage() - 1) * this.analyticsItemsPerPage();
+    const endIndex = startIndex + this.analyticsItemsPerPage();
+    const paginated = this.recentAccessLogs().slice(startIndex, endIndex);
+    this.paginatedAnalytics.set(paginated);
+  }
+
+  goToAnalyticsPage(page: number): void {
+    this.analyticsCurrentPage.set(page);
+    this.updateAnalyticsPagination();
+  }
+
+  onAnalyticsItemsPerPageChange(itemsPerPage: number): void {
+    this.analyticsItemsPerPage.set(Number(itemsPerPage));
+    this.analyticsCurrentPage.set(1);
+    this.updateAnalyticsPagination();
   }
 }
