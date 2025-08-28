@@ -1,4 +1,4 @@
-<nav class="floating-navbar">
+<nav class="floating-navbar" [class.hidden]="!isVisible">
   <ul>
     <li><a routerLink="/urls/generateShortUrl" routerLinkActive="active">Generate</a></li>
     <li><a routerLink="/urls/analytics" routerLinkActive="active">Analytics</a></li>
