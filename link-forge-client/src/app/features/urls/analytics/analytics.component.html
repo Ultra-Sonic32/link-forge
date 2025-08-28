@@ -1,1 +1,59 @@
-<p style="color: white">analytics works!</p>
+<div class="dashboard-wrapper">
+  <!-- Loading -->
+  <div class="d-flex justify-content-center mb-3" *ngIf="isLoadingData()">
+    <div class="spinner-border text-light" role="status">
+      <span class="ms-2 mt-1 text-white">Loading data data...</span>
+    </div>
+  </div>
+
+  <!--Dashboard statst Cards-->
+  <div class="dashboard-container">
+    <div class="card-grid">
+      <div class="dashboard-card">
+        <h5 class="card-header">Total Short URLs</h5>
+        <div class="card-body">
+          <h5 class="card-title">{{ totalUrls() }}</h5>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <h5 class="card-header">Total Clicks</h5>
+        <div class="card-body">
+          <h5 class="card-title">{{ totalClicks() }}</h5>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <h5 class="card-header">Most Clicked</h5>
+        <div class="card-body">
+          <h5 class="card-title">
+            <a
+              [href]="'http://localhost:3000/urls/resolve/' + mostClicked()"
+              target="_blank"
+              class="card-link"
+              >{{ mostClicked() }}</a
+            >
+          </h5>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <h5 class="card-header">Latest URL</h5>
+        <div class="card-body">
+          <h5 class="card-title">
+            <a
+              [href]="'http://localhost:3000/urls/resolve/' + mostRecent()"
+              target="_blank"
+              class="card-link"
+              >{{ mostRecent() }}</a
+            >
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Click over Time-->
+  <div class="chart-container">
+    <canvas id="clicksLineChart"></canvas>
+  </div>
+</div>

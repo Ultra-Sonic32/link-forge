@@ -1,0 +1,78 @@
+//Mian wrapper
+.dashboard-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+
+//Dashbaords stats
+.dashboard-container {
+    padding: 1rem;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.dashboard-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 1rem;
+    color: white;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.card-title {
+    font-size: 1.8rem;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+.card-link {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #90cdf4;
+    text-decoration: none;
+    margin-top: 0.5rem;
+    text-align: center;
+    word-break: break-word;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}
+
+//Charts
+.chart-container {
+  margin-top: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  max-height: 50%; 
+  overflow: hidden;
+
+  canvas {
+    width: 50% !important;
+    height: 50% !important; 
+  }
+}
