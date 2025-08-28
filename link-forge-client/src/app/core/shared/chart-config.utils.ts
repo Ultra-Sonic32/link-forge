@@ -30,7 +30,13 @@ export function getClickOverTimeLineChartConfig(
   return {
     type: 'line',
     data: {
-      labels: data.map((d) => new Date(d._id).toLocaleDateString()),
+      labels: data.map((d) =>
+        new Date(d._id).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        })
+      ),
       datasets: [
         {
           label: 'Clicks Over Time',

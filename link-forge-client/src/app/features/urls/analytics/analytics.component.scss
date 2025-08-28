@@ -62,17 +62,10 @@
 
 //Charts
 .chart-container {
-  margin-top: 2rem;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   border-radius: 16px;
-  padding: 1rem;
+  padding: 1.5rem;
+  margin-top: 2rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-  max-height: 50%; 
-  overflow: hidden;
-
-  canvas {
-    width: 50% !important;
-    height: 50% !important; 
-  }
 }

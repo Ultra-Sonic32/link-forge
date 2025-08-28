@@ -1,9 +1,14 @@
 import { AfterViewInit, Component, computed, OnInit, signal } from '@angular/core';
-import { analyticsDashboardStats, clicksOverTime } from '../../../core/interfaces/analytics.model';
+import {
+  analytics,
+  analyticsDashboardStats,
+  clicksOverTime,
+} from '../../../core/interfaces/analytics.model';
 import { AnalyticsService } from '../../../core/services/analytics.service';
 import { getClickOverTimeLineChartConfig } from '../../../core/shared/chart-config.utils';
 import { Chart } from 'chart.js';
 import { SharedModule } from '../../../core/shared/shared.module';
+import { urlDetails } from '../../../core/interfaces/url-details.model';
 
 @Component({
   selector: 'app-analytics',
@@ -14,6 +19,8 @@ import { SharedModule } from '../../../core/shared/shared.module';
 export default class AnalyticsComponent implements OnInit {
   dashboardCardStats = signal<analyticsDashboardStats | null>(null);
   clickOverTime = signal<clicksOverTime[]>([]);
+  topUrls = signal<urlDetails[]>([]);
+  recentAccessLogs = signal<analytics[]>([]);
   isLoadingData = signal<boolean>(true);
   chartInstance: Chart | null = null;
 
@@ -22,7 +29,12 @@ export default class AnalyticsComponent implements OnInit {
   async ngOnInit() {
     this.isLoadingData.set(true);
     try {
-      await Promise.all([this.loadDashboardStats(), this.loadClickOverTime()]);
+      await Promise.all([
+        this.loadDashboardStats(),
+        this.loadClickOverTime(),
+        this.loadTopUrls(),
+        this.loadRecentAnalytics(),
+      ]);
     } catch (error) {
       console.error(error);
     } finally {
@@ -70,4 +82,24 @@ export default class AnalyticsComponent implements OnInit {
   /**
    *** Top 5 most popular urls
    **/
+  private async loadTopUrls() {
+    this.analyticService.gettopShortUrl().subscribe({
+      next: (data) => {
+        this.topUrls.set(data);
+      },
+      error: (error) => console.error('Failed to top urls', error),
+    });
+  }
+
+  /**
+   *** Load the recently access logs analytics
+   **/
+  private async loadRecentAnalytics() {
+    this.analyticService.getRecentAccessLogs().subscribe({
+      next: (data) => {
+        this.recentAccessLogs.set(data);
+      },
+      error: (error) => console.error('Failed to top urls', error),
+    });
+  }
 }
