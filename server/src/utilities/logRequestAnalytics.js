@@ -10,7 +10,7 @@ const logRequestAnalytics = async (shortUrl, req) => {
       req.connection?.remoteAddress ||
       req.ip ||
       'unknown';
-
+    const userAgentStr = req.headers['user-agent'] || 'Unknown';
     const referrer = req.headers['referer'] || 'Unknown';
     const country = geoip.lookup(ip)?.country || 'Unknown';
 
