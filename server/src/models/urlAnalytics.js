@@ -13,5 +13,6 @@ const urlAnalyticSchema = new Schema(
   { collection: 'urlAnalytics' }
 );
 
+urlAnalyticSchema.index({ shortUrl: 1, accessedAt: -1 });
 const UrlAnalytics = model('UrlAnalytics', urlAnalyticSchema);
 export default UrlAnalytics;
