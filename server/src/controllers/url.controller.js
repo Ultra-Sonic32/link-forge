@@ -14,7 +14,7 @@ const saveShortUrlKey = async (req, res) => {
 const redirectShortUrl = async (req, res) => {
   const { shortUrl } = req.params;
   try {
-    const response = await resolveShortUrl(shortUrl);
+    const response = await resolveShortUrl(shortUrl, req);
     if (response) {
       return res.redirect(response);
     }

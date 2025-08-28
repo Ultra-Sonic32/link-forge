@@ -7,6 +7,7 @@ import {
   incrementClicks,
   findAllShortUrl
 } from '../repositories/url.repository.js';
+import logRequestAnalytics from '../utilities/logRequestAnalytics.js';
 import validator from 'validator';
 import { generateShortUrlKey, generateSnowflakeId } from '../utilities/keyGenerator.js';
 import { get, set, redisExpirationMode, extendTTL } from '../config/redisSetup.js';
@@ -46,13 +47,14 @@ const creatShortUrl = async (originalUrl, customKey = null, neverExpire = false)
   return savedResult;
 };
 
-const resolveShortUrl = async shortUrl => {
+const resolveShortUrl = async (shortUrl, req) => {
   const cachedKey = await get(shortUrl);
   if (cachedKey) {
     //console.log('Cache triggered');
     // Extend TTL
     await extendTTL(shortUrl, 60);
     await incrementClicks(shortUrl);
+    logRequestAnalytics(shortUrl, req);
     return cachedKey;
   }
 
@@ -68,6 +70,7 @@ const resolveShortUrl = async shortUrl => {
   }
   await incrementClicks(shortUrl);
   await set(shortUrl, urlDoc.originalUrl, redisExpirationMode.EX, 120);
+  logRequestAnalytics(shortUrl, req);
   //console.log(`Accessed URL: ${urlDoc.originalUrl}`);
   return urlDoc.originalUrl;
 };
