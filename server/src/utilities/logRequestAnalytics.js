@@ -21,7 +21,7 @@ const logRequestAnalytics = async (shortUrl, req) => {
     const os = uaResult.os.name || 'Unknown';
     const device = uaResult.device.type || 'Desktop';
 
-    await logAnalytics(shortUrl, ip, referrer, userAgentStr, country, browser, os, device);
+    await logAnalytics(shortUrl, ip, referrer, country, browser, os, device);
   } catch (err) {
     console.warn('Analytics logging failed:', err);
   }
