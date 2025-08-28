@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { QRCodeComponent } from 'angularx-qrcode';
-import { SharedModule } from '../../../../core/shared/shared.module';
+import { SharedModule } from '../../core/shared/shared.module';
 
 @Component({
   selector: 'app-qr-model',

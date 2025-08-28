@@ -4,7 +4,7 @@ import { createUrl } from '../../../core/interfaces/url-details.model';
 import { UrlService } from '../../../core/services/url.service';
 import { SharedModule } from '../../../core/shared/shared.module';
 import { environment } from '../../../../environments/environment';
-import { QrModelComponent } from '../../../components/shared/components/qr-model/qr-model.component';
+import { QrModelComponent } from '../../../components/qr-model/qr-model.component';
 
 @Component({
   selector: 'app-generate-short-url',

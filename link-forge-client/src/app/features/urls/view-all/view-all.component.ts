@@ -2,8 +2,8 @@ import { ChangeDetectorRef, Component, effect, OnInit, signal } from '@angular/c
 import { urlDetails } from '../../../core/interfaces/url-details.model';
 import { UrlService } from '../../../core/services/url.service';
 import { SharedModule } from '../../../core/shared/shared.module';
-import { PaginationComponent } from '../../../components/shared/components/pagination/pagination.component';
 import { environment } from '../../../../environments/environment';
+import { PaginationComponent } from '../../../components/pagination/pagination.component';
 
 @Component({
   selector: 'app-view-all',

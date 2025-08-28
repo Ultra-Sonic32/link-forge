@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SharedModule } from '../../../../core/shared/shared.module';
+import { SharedModule } from '../../core/shared/shared.module';
 
 @Component({
   selector: 'app-pagination',
