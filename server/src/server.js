@@ -18,7 +18,7 @@ const initializeDBAndStartServer = async () => {
 
     app.use(
       cors({
-        origin: '*', // change to specific origin
+        origin: 'http://localhost:4200',
         methods: ['GET', 'POST'],
         allowedHeaders: ['Content-Type']
       })
