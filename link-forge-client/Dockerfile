@@ -16,7 +16,7 @@ WORKDIR /app
 
 # Serve Angular app using http-server
 RUN npm install -g http-server
-COPY --from=builder /app/dist/link-forge-client /app/dist
+COPY --from=builder /app/dist/link-forge-client/browser /app/dist
 
 EXPOSE 4200
 CMD ["http-server", "dist", "-p", "4200", "-c-1"]
