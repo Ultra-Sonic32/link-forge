@@ -177,7 +177,13 @@ This will spin up:
 
 ## 📹 Demo
 
-[![Watch the demo](https://img.youtube.com/vi/yS13FvkfxTs/0.jpg)](https://www.youtube.com/watch?v=yS13FvkfxTs)
+> 🎥 Click the image below to watch a short walkthrough of the project.
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=yS13FvkfxTs" target="_blank">
+    <img src="https://img.youtube.com/vi/yS13FvkfxTs/0.jpg" alt="Watch the demo" width="600">
+  </a>
+</p>
 
 ---
 
