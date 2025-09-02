@@ -23,7 +23,7 @@ const fetchClicksOverTime = async () => {
 };
 
 const fetchTopUrls = async limit => {
-  return await getTopUrlsByClicks(limit || 5);
+  return await getTopUrlsByClicks(limit || 10);
 };
 
 export { fetchDashboardStats, fetchRecentAccessLogs, logAnalytics, fetchClicksOverTime, fetchTopUrls };

@@ -31,7 +31,7 @@ const getClicksChartData = async (req, res) => {
 
 const getTopClickedUrls = async (req, res) => {
   try {
-    const data = await fetchTopUrls(1);
+    const data = await fetchTopUrls(5);
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: 'Error getting top URLs' });
