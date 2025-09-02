@@ -67,8 +67,10 @@ export default class ViewAllComponent implements OnInit {
   }
 
   calculateDaysLeft(expiryDate: string): number {
+    console.log('Data form andpoint rsponse', expiryDate);
     const today = new Date();
     const expires = new Date(expiryDate);
+    console.log('Converted with newDate', expires);
     const diff = Math.ceil((expires.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
     return diff;
   }

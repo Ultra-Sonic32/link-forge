@@ -114,7 +114,7 @@
                 </td>
                 <td>{{ url.clicks }}</td>
 
-                <td>{{ url.lastAccessed | date : "yyyy/mm/dd 'at' hh:mm" }}</td>
+                <td>{{ url.lastAccessed | date : "yyyy/MM/dd 'at' HH:mm" }}</td>
                 <td>
                   <span class="badge" [ngClass]="url.isActive ? 'bg-success' : 'bg-danger'">
                     {{ url.isActive ? 'Active' : 'Inactive' }}
@@ -184,7 +184,7 @@
                     {{ analytics.shortUrl }}
                   </a>
                 </td>
-                <td>{{ analytics.accessedAt | date : "yyyy/mm/dd 'at' hh:mm" }}</td>
+                <td>{{ analytics.accessedAt | date : "yyyy/MM/dd 'at' HH:mm" }}</td>
                 <td>{{ analytics.userAgent }}</td>
                 <td>{{ analytics.referrer }}</td>
                 <td>{{ analytics.browser }}</td>
