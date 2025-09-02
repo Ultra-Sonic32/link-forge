@@ -177,7 +177,7 @@ This will spin up:
 
 ## 📹 Demo
 
-A short walkthrough video will be added here soon.
+[![Watch the demo](https://img.youtube.com/vi/yS13FvkfxTs/0.jpg)](https://www.youtube.com/watch?v=yS13FvkfxTs)
 
 ---
 
